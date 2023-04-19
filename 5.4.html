@@ -1,0 +1,30 @@
+<html>
+	<p>Введите число от 100 до 300</p>
+	<input class="input1"></input>
+	<input class="input2"></input>
+	<button class="push">Отправить</button>
+	<p>Картинка:</p>
+	<div class="vstavka"></div>
+	
+	<script>
+		const btn = document.querySelector('.push');
+
+		btn.addEventListener('click', () => {
+			const chi1 = document.querySelector('.input1').value;
+			const chi2 = document.querySelector('.input2').value;
+			const che1 = Number(chi1);
+			const che2 = Number(chi2);
+			
+			if ((99 < che1 && che1 < 301) && (99 < che2 && che2 < 301)) {
+				const url = 'https://picsum.photos/' + chi1 + '/' + chi2;
+				fetch(url)
+					.then((response) => {
+						const resultNode = document.querySelector('.vstavka');
+						resultNode.innerHTML = ` <img src="${response.url}"/>`;
+					})
+			} else {
+				alert('Одно из чисел вне диапазона от 100 до 300');
+			}
+		})
+	</script>
+</html>

@@ -1,0 +1,35 @@
+<html>
+  <input class="input"></input>
+  <button class="push">Нажмите сюда</button>
+  <p>Картинки:</p>
+  <div class="rezult"></div>
+  
+  <script>
+	const btn = document.querySelector('.push');
+	
+	btn.addEventListener('click', () => {
+		const chi = document.querySelector('.input').value;
+		const che = Number(chi);
+		if(!((0 < che) && (che < 11))) {
+			console.log("Число вне диапазона от 1 до 10");
+		} else {
+			const url = 'https://picsum.photos/v2/list?limit=' + che;
+			var xhr = new XMLHttpRequest();
+			xhr.open('GET', url, true);
+			xhr.send();
+			
+			xhr.onload = function() {
+				const result = JSON.parse(xhr.response);
+				result.forEach(src => {
+					const img = document.createElement('img');
+					img.src = src.download_url;
+					img.width = 300;
+					img.height = 200;
+
+					document.querySelector('.rezult').append(img);
+				})
+			}
+		}
+	})
+  </script>
+</html>

@@ -1,0 +1,50 @@
+<html>
+	<input class="input1" placeholder="Номер страницы"></input>
+	<input class="input2" placeholder="Лимит"></input>
+	<button class="push">Запрос</button>
+	<p>Картинки:</p>
+	<div class="vstavka"></div>
+	
+	<script>
+		document.querySelector('.vstavka').innerHTML = localStorage.test;
+		
+		const btn = document.querySelector('.push');
+		
+		btn.addEventListener('click', () => {
+			const chi1 = document.querySelector('.input1').value;
+			const chi2 = document.querySelector('.input2').value;
+			const che1 = Number(chi1);
+			const che2 = Number(chi2);
+			
+			if (!((0 < che1) && (che1 < 11)) && !((0 < che2) && (che2 < 11))) {
+				console.log("Номер страницы и лимит вне диапазона от 1 до 10");
+			} else if (!((0 < che1) && (che1 < 11))) { 
+				console.log("Номер страницы вне диапазона от 1 до 10");
+			} else if (!((0 < che2) && (che2 < 11))) {
+				console.log("Лимит вне диапазона от 1 до 10");
+			} else {
+				const url = 'https://picsum.photos/v2/list?page=' + che1 + '&limit=' + che2;
+				fetch(url)
+					.then((response) => {
+						const result = response.json();
+						return result;
+					})
+					
+					.then((data) => {
+						let vs = '';
+						data.forEach(src => {
+							const vs1 = `
+								<img width=300 height=200 src="${src.download_url}">
+								</div>
+							`;
+							
+							vs = vs + vs1;
+
+							document.querySelector('.vstavka').innerHTML = vs;
+							localStorage.setItem('test', vs);
+						})
+					})
+			}
+		})
+	</script>
+</html>
